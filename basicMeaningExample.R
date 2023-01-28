@@ -1,3 +1,6 @@
+#load table
+dataMeaning=read.table('meaningExample.txt', header=T, sep="\t")
+
 #plot with the labels
 plot(dataMeaning$length,dataMeaning$meanings,type="n",xlab="number of letters",ylab="number of meanings")
 text(dataMeaning$length,dataMeaning$meanings,dataMeaning$entry, cex= 1)

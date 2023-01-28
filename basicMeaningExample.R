@@ -1,17 +1,16 @@
-#load data
-dataMeaning<-read.table('meaningExample.txt', header=T, sep="\t")
+#plot with the labels
+plot(dataMeaning$length,dataMeaning$meanings,type="n",xlab="number of letters",ylab="number of meanings")
+text(dataMeaning$length,dataMeaning$meanings,dataMeaning$entry, cex= 1)
 
-#visualize table
-head(dataMeaning)
+#Now we'd like to build a regression model, i.e., find the equation for the straight line that best defines the dataset. 
 
-#plot data using a scatterplot to see if shorter words
-#have more definitions in dictionaries than longer words
+myModel = lm(dataMeaning$meanings~dataMeaning$length)
+summary(myModel)
+#least square fitting
+abline(myModel,col="red",lw="3")
 
-plot(dataMeaning$length,dataMeaning$meanings)
-
-# Visually, there seems to be a negative correlation which confirms our intuition. Now we’ve got to quantify the strength of this negative relationship, so I’m going to use the cor function to compute a correlation coefficient. 
-
-cor(dataMeaning$length,dataMeaning$meanings)
-
-cor.test(dataMeaning$length,dataMeaning$meanings)
-
+#quick and dirty trick to avoid label overlap (best solution: export to
+# vector format, like eps, and edit in separate software)
+newMeanings = jitter(dataMeaning$meanings, 5)
+plot(dataMeaning$length,newMeanings,type="n",xlab="number of letters",ylab="number of meanings")
+text(dataMeaning$length,newMeanings,dataMeaning$entry, cex= 1)
